@@ -26,6 +26,7 @@ namespace fuel_manager_web_api.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {

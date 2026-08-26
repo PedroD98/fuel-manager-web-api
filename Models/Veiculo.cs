@@ -21,4 +21,5 @@ public class Veiculo : LinksHATEOS
     [Range(1, int.MaxValue, ErrorMessage = "O Ano do Modelo deve ser maior que zero.")]
     public int AnoModelo { get; set; }
     public ICollection<Consumo> Consumos { get; set; }
+    public ICollection<VeiculoUsuarios> Usuarios { get; set; }
 }

@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace fuel_manager_web_api.Models;
 
+[NotMapped]
 public class LinkDto(int id, string href, string rel, string metodo)
 {
     public int Id { get; set; } = id;

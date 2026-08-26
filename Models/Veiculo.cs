@@ -15,10 +15,10 @@ public class Veiculo
     [Required(ErrorMessage = "A Placa é obrigatória.")]
     public string Placa { get; set; }
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "Ano de Fabricação deve ser maior que zero.")]
+    [Range(1, int.MaxValue, ErrorMessage = "O Ano de Fabricação deve ser maior que zero.")]
     public int AnoFabricacao { get; set; }
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "Ano do Modelo deve ser maior que zero.")]
+    [Range(1, int.MaxValue, ErrorMessage = "O Ano do Modelo deve ser maior que zero.")]
     public int AnoModelo { get; set; }
     public ICollection<Consumo> Consumos { get; set; }
 }

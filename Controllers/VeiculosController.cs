@@ -36,7 +36,8 @@ namespace fuel_manager_web_api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var model = await _context.Veiculos.FirstOrDefaultAsync(c => c.Id == id);
+            var model = await _context.Veiculos.Include(t => t.Consumos)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (model == null) return NotFound(new { status = 404, errors = new { message = "Veículo não encontrado." } });
 
@@ -58,7 +59,7 @@ namespace fuel_manager_web_api.Controllers
             return NoContent();
         }
 
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -69,7 +70,7 @@ namespace fuel_manager_web_api.Controllers
             _context.Veiculos.Remove(model);
             await _context.SaveChangesAsync();
 
-            return NoContent();;
+            return NoContent(); ;
         }
 
 

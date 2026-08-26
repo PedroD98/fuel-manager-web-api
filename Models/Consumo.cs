@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace fuel_manager_web_api.Models;
 
 [Table("Consumos")]
-public class Consumo
+public class Consumo : LinksHATEOS
 {
     [Key]
     public int Id { get; set; }

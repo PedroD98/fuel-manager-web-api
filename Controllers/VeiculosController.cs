@@ -41,6 +41,7 @@ namespace fuel_manager_web_api.Controllers
 
             if (model == null) return NotFound(new { status = 404, errors = new { message = "Veículo não encontrado." } });
 
+            GerarLinks(model);
             return Ok(model);
         }
 
@@ -73,6 +74,11 @@ namespace fuel_manager_web_api.Controllers
             return NoContent(); ;
         }
 
-
+        private void GerarLinks(Veiculo model)
+        {
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), "self", "GET"));
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), "self", "PUT"));
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), "self", "DELETE"));
+        }
     }
 }

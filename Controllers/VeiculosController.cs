@@ -36,7 +36,9 @@ namespace fuel_manager_web_api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var model = await _context.Veiculos.Include(t => t.Consumos)
+            var model = await _context.Veiculos
+                .Include(t => t.Usuarios).ThenInclude(t => t.Usuario)
+                .Include(t => t.Consumos)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (model == null) return NotFound(new { status = 404, errors = new { message = "Veículo não encontrado." } });
@@ -74,6 +76,31 @@ namespace fuel_manager_web_api.Controllers
             return NoContent(); ;
         }
 
+        [HttpPost("{id}/usuarios")]
+        public async Task<ActionResult> AddUsuario(int id, VeiculoUsuarios model)
+        {
+            if (id != model.VeiculoId) return NotFound(new { status = 404, errors = new { message = "Veículo não encontrado." } }); 
+
+            _context.VeiculoUsuarios.Add(model);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetById", new { id = model.VeiculoId}, model);
+        }
+
+        [HttpDelete("{id}/usuarios/{usuarioId}")]
+        public async Task<ActionResult> RemoveUsuario(int id, int usuarioId)
+        {
+            var model = await _context.VeiculoUsuarios
+                .Where(c => c.VeiculoId == id && c.UsuarioId == usuarioId)
+                .FirstOrDefaultAsync();
+
+            if (model == null) return NotFound();
+
+            _context.VeiculoUsuarios.Remove(model);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private void GerarLinks(Veiculo model)
         {
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), "self", "GET"));
